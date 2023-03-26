@@ -11,15 +11,18 @@ class_name Player
 
 ### GLOBAL VARIABLE ###
 
-const MAX_SPEED = 50
 const FRICTION = 500
 const ACCELERATION = 250
 
+onready var damage = $Stats.damage
+onready var MAX_SPEED = $Stats.speed
 onready var animation_player = $AnimationPlayer
 onready var animation_tree = $AnimationTree
 onready var animation_state = animation_tree.get("parameters/playback")
 onready var state_machine = $STATEMACHINE
 onready var controler = $Controler
+onready var HP_bar = $HUD/HealthBar/TextureProgress
+onready var stats = $Stats
 
 var velocity = Vector2.ZERO
 var dir_move = Vector2.ZERO
@@ -28,7 +31,11 @@ var dir_move = Vector2.ZERO
 ### BUIL IN ###
 
 func _ready():
+	var __ = $HurtBox.connect("Hurtbox_hurt", self, "_on_HURTBOX_hurtbox_hurt")
 	state_machine.set_to_default_state()
+	$HitboxsPivot/AttacktHitBox.damage = stats.damage
+	HP_bar.set_max(stats.max_health)
+	HP_bar.set_value(stats.current_health)
 
 func _physics_process(_delta):
 	_updated_animation()
@@ -45,8 +52,11 @@ func hurt(_damage):
 	
 func _updated_animation():
 	animation_state.travel(state_machine.get_state_name())
-	if velocity != Vector2.ZERO:
+	if velocity != Vector2.ZERO and not state_machine.get_state_name() == "ATTACK":
 		animation_tree.set("parameters/" + state_machine.get_state_name() + "/blend_position", velocity)
+		animation_tree.set("parameters/ATTACK/blend_position", velocity)
+	
+		
 
 
 ### LOGIC STATE ###
@@ -65,9 +75,22 @@ func IDLE_update_state(_delta):
 	
 	if dir_move != Vector2.ZERO:
 		state_machine.set_state("MOVE")
+	
+	if controler.attack1 : state_machine.set_state("ATTACK")
 
 
 ### SIGNAL RESPONSISES ###
 
 func _attack_animation_finished():
 	state_machine.set_state("MOVE")
+
+func DIE_animation_finished():
+	queue_free()
+
+func _on_HURTBOX_hurtbox_hurt(_damage):
+	print("Hit")
+	stats.current_health = max(0, stats.current_health - _damage)
+	HP_bar.set_value(stats.current_health)
+	# hurtbox effect ()
+	if stats.current_health == 0 :
+		state_machine.set_state("DIE")

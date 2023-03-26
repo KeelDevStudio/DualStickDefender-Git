@@ -6,7 +6,6 @@
 radius = 6.0
 
 [node name="Cristal" type="KinematicBody2D"]
-collision_layer = 256
 collision_mask = 2048
 
 [node name="Sprite" type="Sprite" parent="."]

@@ -1,4 +1,14 @@
+#############
+### LEVEL ###
+#############
+
+
+### EXPENSION ####
+
 extends YSort
+
+
+### BUILT IN ###
 
 func _ready() -> void :
 	var rectangle: Rect2 = $TileMap.get_used_rect()

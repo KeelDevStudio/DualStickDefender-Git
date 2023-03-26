@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://Actors/Overlap/AttackArea.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Actors/StateMachines/StateMachine.gd" type="Script" id=2]
@@ -10,38 +10,28 @@
 [ext_resource path="res://Actors/ActorAnimationPlayer.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Actors/ActorAnimationTree.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Actors/Characters/Enemies/Mobs/EasyEnemieControler.gd" type="Script" id=10]
-[ext_resource path="res://Actors/Characters/Enemies/Ressources/enemieNavigation.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Actors/Characters/Enemies/PathFinding/enemieNavigation.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Actors/StateMachines/State/State.gd" type="Script" id=12]
+[ext_resource path="res://Actors/Characters/Stats.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Actors/Overlap/HurtBox.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Asset/HUD/Back_Health_bars.png" type="Texture" id=15]
+[ext_resource path="res://Asset/HUD/Front_Health_bars.png" type="Texture" id=16]
 
-[sub_resource type="CircleShape2D" id=1]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=18]
 
-[sub_resource type="CircleShape2D" id=2]
+[sub_resource type="CapsuleShape2D" id=19]
+radius = 6.5
+height = 6.0
+
+[sub_resource type="CircleShape2D" id=20]
+
+[sub_resource type="CircleShape2D" id=21]
 radius = 40.0
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=3]
-
 [node name="Enemie" type="KinematicBody2D"]
-collision_layer = 2048
-collision_mask = 0
+collision_layer = 16
+collision_mask = 257
 script = ExtResource( 10 )
-
-[node name="Navigation2D" parent="." instance=ExtResource( 11 )]
-
-[node name="AttacktHitBox" parent="." instance=ExtResource( 4 )]
-collision_mask = 256
-
-[node name="CollisionShape2D" parent="AttacktHitBox" index="0"]
-shape = ExtResource( 7 )
-
-[node name="AttackArea" parent="." instance=ExtResource( 1 )]
-
-[node name="CollisionShape2D" parent="AttackArea" index="0"]
-shape = SubResource( 1 )
-
-[node name="ChaseArea" parent="." instance=ExtResource( 3 )]
-
-[node name="CollisionShape2D" parent="ChaseArea" index="0"]
-shape = SubResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 0, -1 )
@@ -54,14 +44,53 @@ frame = 10
 
 [node name="AnimationTree" parent="." instance=ExtResource( 9 )]
 active = true
-parameters/playback = SubResource( 3 )
+parameters/playback = SubResource( 18 )
+
+[node name="HurtBox" parent="." instance=ExtResource( 14 )]
+collision_layer = 32
+
+[node name="CollisionShape2D" parent="HurtBox" index="0"]
+position = Vector2( 0, -1 )
+shape = SubResource( 19 )
+
+[node name="AttackArea" parent="." instance=ExtResource( 1 )]
+visible = false
+collision_mask = 256
+
+[node name="CollisionShape2D" parent="AttackArea" index="0"]
+shape = SubResource( 20 )
+
+[node name="HitboxsPivot" type="Position2D" parent="."]
+rotation = -3.14159
+
+[node name="AttacktHitBox" parent="HitboxsPivot" instance=ExtResource( 4 )]
+collision_mask = 512
+damage = 1
+
+[node name="CollisionShape2D" parent="HitboxsPivot/AttacktHitBox" index="0"]
+shape = ExtResource( 7 )
+
+[node name="ChaseArea" parent="." instance=ExtResource( 3 )]
+visible = false
+collision_mask = 512
+
+[node name="CollisionShape2D" parent="ChaseArea" index="0"]
+shape = SubResource( 21 )
 
 [node name="SelfColiderBox" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2( 0, 1 )
 shape = ExtResource( 6 )
 
+[node name="Stats" parent="." instance=ExtResource( 13 )]
+max_health = 3
+damage = 1
+speed = 30
+
 [node name="Timer" type="Timer" parent="."]
 one_shot = true
+
+[node name="Navigation2D" parent="." instance=ExtResource( 11 )]
 
 [node name="STATEMACHINE" type="Node" parent="."]
 script = ExtResource( 2 )
@@ -81,6 +110,24 @@ script = ExtResource( 12 )
 [node name="DIE" type="Node" parent="STATEMACHINE"]
 script = ExtResource( 12 )
 
-[editable path="AttacktHitBox"]
+[node name="HUD" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="HealthBar" type="Control" parent="HUD"]
+margin_left = -8.0
+margin_top = -15.0
+margin_right = 32.0
+margin_bottom = 25.0
+
+[node name="TextureProgress" type="TextureProgress" parent="HUD/HealthBar"]
+margin_right = 40.0
+margin_bottom = 40.0
+max_value = 1.0
+texture_under = ExtResource( 15 )
+texture_progress = ExtResource( 16 )
+
+[editable path="HurtBox"]
 [editable path="AttackArea"]
+[editable path="HitboxsPivot/AttacktHitBox"]
 [editable path="ChaseArea"]

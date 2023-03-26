@@ -1,9 +1,9 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=31 format=2]
 
 [ext_resource path="res://Actors/Characters/Player/Jobs/Player.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Actors/Characters/Player/Defenses/Baliste.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Asset/Map/Debug_Map.png" type="Texture" id=3]
 [ext_resource path="res://Levels/Level.gd" type="Script" id=4]
+[ext_resource path="res://Actors/Characters/Enemies/Mobs/Enemie2.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Actors/Cristal/Cristal.tscn" type="PackedScene" id=6]
 
 [sub_resource type="NavigationPolygon" id=23]
@@ -230,6 +230,8 @@ polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
 1/shapes = [  ]
 1/z_index = 0
 
+[sub_resource type="AnimationNodeStateMachinePlayback" id=27]
+
 [node name="Debug" type="YSort"]
 script = ExtResource( 4 )
 
@@ -255,5 +257,12 @@ position = Vector2( 125, 160 )
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 169, 112 )
 
-[node name="Baliste" parent="." instance=ExtResource( 2 )]
-position = Vector2( 189, 24 )
+[node name="AnimationTree" parent="Player" index="5"]
+parameters/playback = SubResource( 27 )
+
+[node name="Enemie" parent="." instance=ExtResource( 5 )]
+position = Vector2( 208, 78 )
+
+[editable path="Player"]
+[editable path="Player/HurtBox"]
+[editable path="Player/HitboxsPivot/AttacktHitBox"]

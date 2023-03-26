@@ -1,7 +1,6 @@
 [gd_scene load_steps=18 format=2]
 
 [sub_resource type="Animation" id=10]
-resource_name = "AttackDown"
 length = 0.6
 loop = true
 step = 0.15
@@ -31,9 +30,32 @@ tracks/1/keys = {
 "method": "_attack_animation_finished"
 } ]
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath("HitboxsPivot/AttacktHitBox/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.15, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("HitboxsPivot:rotation_degrees")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
 
 [sub_resource type="Animation" id=11]
-resource_name = "AttackLeft"
 length = 0.6
 step = 0.15
 tracks/0/type = "value"
@@ -62,9 +84,32 @@ tracks/1/keys = {
 "method": "_attack_animation_finished"
 } ]
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath("HitboxsPivot/AttacktHitBox/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.15, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("HitboxsPivot:rotation_degrees")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 90.0 ]
+}
 
 [sub_resource type="Animation" id=12]
-resource_name = "AttackRight"
 length = 0.6
 loop = true
 step = 0.15
@@ -94,9 +139,32 @@ tracks/1/keys = {
 "method": "_attack_animation_finished"
 } ]
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath("HitboxsPivot/AttacktHitBox/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.15, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("HitboxsPivot:rotation_degrees")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 270.0 ]
+}
 
 [sub_resource type="Animation" id=13]
-resource_name = "AttackUp"
 length = 0.6
 step = 0.15
 tracks/0/type = "value"
@@ -125,9 +193,32 @@ tracks/1/keys = {
 "method": "_attack_animation_finished"
 } ]
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath("HitboxsPivot/AttacktHitBox/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.15, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("HitboxsPivot:rotation_degrees")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 180.0 ]
+}
 
 [sub_resource type="Animation" id=14]
-resource_name = "DieDown"
 length = 0.6
 step = 0.15
 tracks/0/type = "value"
@@ -144,7 +235,6 @@ tracks/0/keys = {
 }
 
 [sub_resource type="Animation" id=15]
-resource_name = "DieLeft"
 length = 0.6
 step = 0.15
 tracks/0/type = "value"
@@ -159,9 +249,22 @@ tracks/0/keys = {
 "update": 1,
 "values": [ 19, 24, 25, 26 ]
 }
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.6 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "DIE_animation_finished"
+} ]
+}
 
 [sub_resource type="Animation" id=16]
-resource_name = "DieRight"
 length = 0.6
 step = 0.15
 tracks/0/type = "value"
@@ -176,9 +279,22 @@ tracks/0/keys = {
 "update": 1,
 "values": [ 12, 15, 16, 17 ]
 }
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.6 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "DIE_animation_finished"
+} ]
+}
 
 [sub_resource type="Animation" id=17]
-resource_name = "DieUp"
 length = 0.6
 step = 0.15
 tracks/0/type = "value"
@@ -193,9 +309,22 @@ tracks/0/keys = {
 "update": 1,
 "values": [ 28, 33, 34, 35 ]
 }
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.6 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "DIE_animation_finished"
+} ]
+}
 
 [sub_resource type="Animation" id=1]
-resource_name = "IdleDown"
 length = 0.1
 loop = true
 tracks/0/type = "value"
@@ -212,7 +341,6 @@ tracks/0/keys = {
 }
 
 [sub_resource type="Animation" id=2]
-resource_name = "IdleLeft"
 length = 0.1
 loop = true
 tracks/0/type = "value"
@@ -229,7 +357,6 @@ tracks/0/keys = {
 }
 
 [sub_resource type="Animation" id=3]
-resource_name = "IdleRight"
 length = 0.1
 loop = true
 tracks/0/type = "value"
@@ -246,7 +373,6 @@ tracks/0/keys = {
 }
 
 [sub_resource type="Animation" id=4]
-resource_name = "IdleUp"
 length = 0.1
 loop = true
 tracks/0/type = "value"
@@ -263,7 +389,6 @@ tracks/0/keys = {
 }
 
 [sub_resource type="Animation" id=5]
-resource_name = "MoveDown"
 length = 0.6
 loop = true
 step = 0.15
@@ -281,7 +406,6 @@ tracks/0/keys = {
 }
 
 [sub_resource type="Animation" id=6]
-resource_name = "MoveLeft"
 length = 0.6
 loop = true
 step = 0.15
@@ -299,7 +423,6 @@ tracks/0/keys = {
 }
 
 [sub_resource type="Animation" id=7]
-resource_name = "MoveRight"
 length = 0.6
 loop = true
 step = 0.15
@@ -317,7 +440,6 @@ tracks/0/keys = {
 }
 
 [sub_resource type="Animation" id=8]
-resource_name = "MoveUp"
 length = 0.6
 loop = true
 step = 0.15
@@ -347,6 +469,18 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 0,
 "values": [ 10 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("HitboxsPivot/AttacktHitBox/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ true ]
 }
 
 [node name="AnimationPlayer" type="AnimationPlayer"]
