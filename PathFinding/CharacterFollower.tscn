@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://PathFinding/Sprite_path.gd" type="Script" id=1]
+
+[node name="CharacterFollower" type="PathFollow2D"]
+position = Vector2( 24, 168 )
+rotate = false
+cubic_interp = false
+loop = false
+script = ExtResource( 1 )

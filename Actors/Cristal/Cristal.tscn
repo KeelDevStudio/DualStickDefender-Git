@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Asset/Map/Debug_Map.png" type="Texture" id=1]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 6.0
+
+[node name="Cristal" type="KinematicBody2D"]
+collision_layer = 256
+collision_mask = 2048
+
+[node name="Sprite" type="Sprite" parent="."]
+self_modulate = Color( 0, 0.427451, 0.117647, 1 )
+texture = ExtResource( 1 )
+hframes = 5
+vframes = 6
+frame = 29
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )

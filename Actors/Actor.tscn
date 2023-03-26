@@ -1,0 +1,34 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Actors/StateMachines/StateMachine.gd" type="Script" id=2]
+[ext_resource path="res://Actors/StateMachines/State/State.gd" type="Script" id=4]
+
+[node name="Actor" type="KinematicBody2D"]
+collision_layer = 256
+collision_mask = 1025
+
+[node name="Controler" type="Node" parent="."]
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 0, -1 )
+hframes = 9
+vframes = 4
+frame = 3
+
+[node name="SelfColiderBox" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 3 )
+
+[node name="STATEMACHINE" type="Node" parent="."]
+script = ExtResource( 2 )
+
+[node name="MOVE" type="Node" parent="STATEMACHINE"]
+script = ExtResource( 4 )
+
+[node name="ATTACK" type="Node" parent="STATEMACHINE"]
+script = ExtResource( 4 )
+
+[node name="HURT" type="Node" parent="STATEMACHINE"]
+script = ExtResource( 4 )
+
+[node name="DIE" type="Node" parent="STATEMACHINE"]
+script = ExtResource( 4 )

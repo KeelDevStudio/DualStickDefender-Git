@@ -1,0 +1,67 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://Actors/Characters/Player/Player.gd" type="Script" id=1]
+[ext_resource path="res://Actors/Characters/Player/PlayerControler.gd" type="Script" id=2]
+[ext_resource path="res://Asset/Actors/Crokie-Sheet.png" type="Texture" id=3]
+[ext_resource path="res://Actors/Characters/Player/Ressources/PlayerColiderBox.tres" type="Shape2D" id=4]
+[ext_resource path="res://Actors/Characters/Player/Ressources/PlayerAttackHitBox.tres" type="Shape2D" id=5]
+[ext_resource path="res://Actors/ActorAnimationTree.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Actors/ActorAnimationPlayer.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Actors/Overlap/HitBox.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Actors/StateMachines/StateMachine.gd" type="Script" id=9]
+[ext_resource path="res://Actors/StateMachines/State/State.gd" type="Script" id=10]
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=1]
+
+[node name="Player" type="KinematicBody2D"]
+collision_layer = 256
+collision_mask = 1025
+script = ExtResource( 1 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+
+[node name="Controler" type="Node" parent="."]
+script = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 0, -1 )
+texture = ExtResource( 3 )
+hframes = 9
+vframes = 4
+frame = 10
+
+[node name="AnimationPlayer" parent="." instance=ExtResource( 7 )]
+
+[node name="AnimationTree" parent="." instance=ExtResource( 6 )]
+active = true
+parameters/playback = SubResource( 1 )
+
+[node name="SelfColiderBox" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 3 )
+shape = ExtResource( 4 )
+
+[node name="AttacktHitBox" parent="." instance=ExtResource( 8 )]
+
+[node name="CollisionShape2D" parent="AttacktHitBox" index="0"]
+shape = ExtResource( 5 )
+
+[node name="STATEMACHINE" type="Node" parent="."]
+script = ExtResource( 9 )
+
+[node name="IDLE" type="Node" parent="STATEMACHINE"]
+script = ExtResource( 10 )
+
+[node name="MOVE" type="Node" parent="STATEMACHINE"]
+script = ExtResource( 10 )
+
+[node name="ATTACK" type="Node" parent="STATEMACHINE"]
+script = ExtResource( 10 )
+
+[node name="HURT" type="Node" parent="STATEMACHINE"]
+script = ExtResource( 10 )
+
+[node name="DIE" type="Node" parent="STATEMACHINE"]
+script = ExtResource( 10 )
+
+[editable path="AttacktHitBox"]
