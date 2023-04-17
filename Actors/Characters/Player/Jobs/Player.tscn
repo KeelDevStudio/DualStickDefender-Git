@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Actors/Characters/Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://Actors/Characters/Player/PlayerControler.gd" type="Script" id=2]
@@ -11,8 +11,7 @@
 [ext_resource path="res://Actors/StateMachines/StateMachine.gd" type="Script" id=9]
 [ext_resource path="res://Actors/StateMachines/State/State.gd" type="Script" id=10]
 [ext_resource path="res://Actors/Characters/Stats.tscn" type="PackedScene" id=11]
-[ext_resource path="res://Asset/HUD/Front_Health_bars.png" type="Texture" id=12]
-[ext_resource path="res://Asset/HUD/Back_Health_bars.png" type="Texture" id=13]
+[ext_resource path="res://Components/HealthBarComponent.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Actors/Overlap/HurtBox.tscn" type="PackedScene" id=14]
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=18]
@@ -54,13 +53,6 @@ visible = false
 position = Vector2( 0, 3 )
 shape = ExtResource( 4 )
 
-[node name="HurtBox" parent="." instance=ExtResource( 14 )]
-collision_layer = 512
-
-[node name="CollisionShape2D" parent="HurtBox" index="0"]
-position = Vector2( 0, 0 )
-shape = SubResource( 19 )
-
 [node name="HitboxsPivot" type="Position2D" parent="."]
 
 [node name="AttacktHitBox" parent="HitboxsPivot" instance=ExtResource( 8 )]
@@ -69,6 +61,15 @@ damage = 1
 
 [node name="CollisionShape2D" parent="HitboxsPivot/AttacktHitBox" index="0"]
 shape = ExtResource( 5 )
+
+[node name="HurtBox" parent="." instance=ExtResource( 14 )]
+collision_layer = 512
+ownerNodePath = NodePath("..")
+statsPath = NodePath("../Stats")
+
+[node name="CollisionShape2D" parent="HurtBox" index="0"]
+position = Vector2( 0, 0 )
+shape = SubResource( 19 )
 
 [node name="STATEMACHINE" type="Node" parent="."]
 script = ExtResource( 9 )
@@ -92,18 +93,8 @@ script = ExtResource( 10 )
 margin_right = 40.0
 margin_bottom = 40.0
 
-[node name="HealthBar" type="Control" parent="HUD"]
-margin_left = -8.0
-margin_top = -15.0
-margin_right = 32.0
-margin_bottom = 25.0
+[node name="HealthBarComponent" parent="HUD" instance=ExtResource( 12 )]
+statsPath = NodePath("../../Stats")
 
-[node name="TextureProgress" type="TextureProgress" parent="HUD/HealthBar"]
-margin_right = 40.0
-margin_bottom = 40.0
-max_value = 1.0
-texture_under = ExtResource( 13 )
-texture_progress = ExtResource( 12 )
-
-[editable path="HurtBox"]
 [editable path="HitboxsPivot/AttacktHitBox"]
+[editable path="HurtBox"]

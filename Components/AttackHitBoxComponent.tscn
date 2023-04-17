@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Actors/Characters/Player/Ressources/PlayerAttackHitBox.tres" type="Shape2D" id=1]
+[ext_resource path="res://Actors/Overlap/HitBox.gd" type="Script" id=2]
+
+[node name="AttackHitBoxComponent" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="HitboxsPivot" type="Position2D" parent="."]
+
+[node name="AttacktHitBox" type="Area2D" parent="HitboxsPivot"]
+collision_layer = 0
+collision_mask = 512
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxsPivot/AttacktHitBox"]
+position = Vector2( 0.5, 12 )
+shape = ExtResource( 1 )
+disabled = true

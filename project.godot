@@ -10,6 +10,21 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "Node",
+"class": "AnimationPlayerStates",
+"language": "GDScript",
+"path": "res://Actors/Animation_Player.gd"
+}, {
+"base": "Area2D",
+"class": "AttackArea",
+"language": "GDScript",
+"path": "res://Actors/Overlap/AttackArea.gd"
+}, {
+"base": "Area2D",
+"class": "ChaseArea",
+"language": "GDScript",
+"path": "res://Actors/Overlap/ChaseArea.gd"
+}, {
+"base": "Node",
 "class": "Controler",
 "language": "GDScript",
 "path": "res://Actors/Controler.gd"
@@ -18,6 +33,11 @@ _global_script_classes=[ {
 "class": "EasyEnemieControler",
 "language": "GDScript",
 "path": "res://Actors/Characters/Enemies/Mobs/EasyEnemieControler.gd"
+}, {
+"base": "Control",
+"class": "HealthBarComponent",
+"language": "GDScript",
+"path": "res://Actors/Characters/Enemies/Mobs/HealthBarComponent.gd"
 }, {
 "base": "Area2D",
 "class": "HitBox",
@@ -65,8 +85,12 @@ _global_script_classes=[ {
 "path": "res://Actors/Characters/Player/Defenses/Baliste.gd"
 } ]
 _global_script_class_icons={
+"AnimationPlayerStates": "",
+"AttackArea": "",
+"ChaseArea": "",
 "Controler": "",
 "EasyEnemieControler": "",
+"HealthBarComponent": "",
 "HitBox": "",
 "HurtBox": "",
 "Player": "",
@@ -202,6 +226,8 @@ Attack1={
 2d_physics/layer_6="EnemieHurtbox"
 2d_physics/layer_9="Player"
 2d_physics/layer_10="PlayerHurtbox"
+2d_physics/layer_13="Cristal"
+2d_physics/layer_14="CristalHurtbox"
 
 [physics]
 

@@ -18,5 +18,4 @@ func _ready():
 
 
 func _on_area_entered(_area):
-	print("hit")
 	_area.hurtbox_hurt(damage)

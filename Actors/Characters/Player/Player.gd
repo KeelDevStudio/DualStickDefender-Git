@@ -21,7 +21,7 @@ onready var animation_tree = $AnimationTree
 onready var animation_state = animation_tree.get("parameters/playback")
 onready var state_machine = $STATEMACHINE
 onready var controler = $Controler
-onready var HP_bar = $HUD/HealthBar/TextureProgress
+#onready var HP_bar = $HUD/HealthBar/TextureProgress
 onready var stats = $Stats
 
 var velocity = Vector2.ZERO
@@ -31,11 +31,11 @@ var dir_move = Vector2.ZERO
 ### BUIL IN ###
 
 func _ready():
-	var __ = $HurtBox.connect("Hurtbox_hurt", self, "_on_HURTBOX_hurtbox_hurt")
+	var __ = stats.connect("current_health_0", self, "_on_current_health_0")
 	state_machine.set_to_default_state()
 	$HitboxsPivot/AttacktHitBox.damage = stats.damage
-	HP_bar.set_max(stats.max_health)
-	HP_bar.set_value(stats.current_health)
+#	HP_bar.set_max(stats.max_health)
+#	HP_bar.set_value(stats.current_health)
 
 func _physics_process(_delta):
 	_updated_animation()
@@ -87,10 +87,5 @@ func _attack_animation_finished():
 func DIE_animation_finished():
 	queue_free()
 
-func _on_HURTBOX_hurtbox_hurt(_damage):
-	print("Hit")
-	stats.current_health = max(0, stats.current_health - _damage)
-	HP_bar.set_value(stats.current_health)
-	# hurtbox effect ()
-	if stats.current_health == 0 :
-		state_machine.set_state("DIE")
+func _on_current_health_0():
+	state_machine.set_state("DIE")
