@@ -10,6 +10,6 @@ func _ready():
 	$TextureProgress.set_max(stats.max_health)
 	$TextureProgress.set_value(stats.current_health)
 
-func _process(delta):
+func _process(_delta):
 	if $TextureProgress.value != stats.current_health:
 		$TextureProgress.set_value(stats.current_health)

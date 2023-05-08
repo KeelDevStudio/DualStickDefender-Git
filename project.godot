@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Node2D",
+"class": "AllWavesComponent",
+"language": "GDScript",
+"path": "res://Actors/Spawners/AllWavesComponent.gd"
+}, {
 "base": "Node",
 "class": "AnimationPlayerStates",
 "language": "GDScript",
@@ -34,6 +39,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Actors/Characters/Enemies/Mobs/EasyEnemieControler.gd"
 }, {
+"base": "Resource",
+"class": "EnemieSpawnRessource",
+"language": "GDScript",
+"path": "res://Actors/Spawners/EnemieSpawnRessource.gd"
+}, {
 "base": "Control",
 "class": "HealthBarComponent",
 "language": "GDScript",
@@ -49,6 +59,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Actors/Overlap/HurtBox.gd"
 }, {
+"base": "Node2D",
+"class": "OneWaveComponent",
+"language": "GDScript",
+"path": "res://Actors/Spawners/OneWaveComponent.gd"
+}, {
 "base": "KinematicBody2D",
 "class": "Player",
 "language": "GDScript",
@@ -63,6 +78,11 @@ _global_script_classes=[ {
 "class": "Projectile",
 "language": "GDScript",
 "path": "res://Actors/Characters/Player/Weapons/Arrow.gd"
+}, {
+"base": "Node2D",
+"class": "SpawnerComponent",
+"language": "GDScript",
+"path": "res://Actors/Spawners/Spawner.gd"
 }, {
 "base": "Node",
 "class": "State",
@@ -85,17 +105,21 @@ _global_script_classes=[ {
 "path": "res://Actors/Characters/Player/Defenses/Baliste.gd"
 } ]
 _global_script_class_icons={
+"AllWavesComponent": "",
 "AnimationPlayerStates": "",
 "AttackArea": "",
 "ChaseArea": "",
 "Controler": "",
 "EasyEnemieControler": "",
+"EnemieSpawnRessource": "",
 "HealthBarComponent": "",
 "HitBox": "",
 "HurtBox": "",
+"OneWaveComponent": "",
 "Player": "",
 "PlayerControler": "",
 "Projectile": "",
+"SpawnerComponent": "",
 "State": "",
 "StateMachine": "",
 "Stats": "",

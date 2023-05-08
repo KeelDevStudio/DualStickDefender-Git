@@ -39,8 +39,8 @@ func _navigate():
 		velocity = global_position.direction_to(path[1])
 
 	
-	if global_position == path[0]:
-		path.pop_front()
+#	if global_position == path[0]:
+#		path.pop_front()
 	
 	else : return Vector2.ZERO
 

@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Actors/Spawners/Spawner.gd" type="Script" id=1]
+[ext_resource path="res://Actors/Spawners/SpawnerLabel.gd" type="Script" id=3]
+
+[node name="SpawnerComponent" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="Label" type="Label" parent="."]
+margin_left = 12.0
+margin_top = -8.0
+margin_right = 52.0
+margin_bottom = 6.0
+script = ExtResource( 3 )
+spawnerComponentPath = NodePath("..")
