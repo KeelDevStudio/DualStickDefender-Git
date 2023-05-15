@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Actors/Characters/Player/Jobs/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Actors/Spawners/SpawnerGate.tscn" type="PackedScene" id=2]
@@ -6,10 +6,12 @@
 [ext_resource path="res://Levels/Level.gd" type="Script" id=4]
 [ext_resource path="res://Levels/tilesMap.tres" type="TileSet" id=5]
 [ext_resource path="res://Actors/Cristal/Cristal.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Components/OneWaveComponent.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Actors/Spawners/AllWavesComponent.gd" type="Script" id=7]
 [ext_resource path="res://Components/SpawnerComponent.tscn" type="PackedScene" id=8]
-[ext_resource path="res://Actors/Characters/Enemies/Mobs/Enemie2.tscn" type="PackedScene" id=9]
-[ext_resource path="res://Components/AllWavesComponent.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Actors/Spawners/OneWaveComponent.gd" type="Script" id=9]
+[ext_resource path="res://Components/waveManagerWAIT.gd" type="Script" id=10]
+[ext_resource path="res://Components/WaveManager/WAVESMANAGER.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Levels/StateWaveWAVE.gd" type="Script" id=12]
 
 [sub_resource type="NavigationPolygon" id=25]
 vertices = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
@@ -38,31 +40,39 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="SpawnerGate" parent="." instance=ExtResource( 2 )]
-modulate = Color( 0.00392157, 0.00392157, 0.00392157, 1 )
+[node name="Gate 1" parent="." instance=ExtResource( 2 )]
 position = Vector2( 117, 9 )
 z_index = 1
 
-[node name="AllWavesComponent" parent="SpawnerGate" instance=ExtResource( 10 )]
-position2DPath = NodePath("../Position2D")
+[node name="Sprite" parent="Gate 1" index="0"]
+self_modulate = Color( 0, 0, 0, 1 )
 
-[node name="Wave1" parent="SpawnerGate/AllWavesComponent" instance=ExtResource( 7 )]
-wait_time = Vector2( 1.5, 3 )
+[node name="WAVE 1" type="Node2D" parent="Gate 1"]
+script = ExtResource( 7 )
 
-[node name="SpawnerComponent" parent="SpawnerGate/AllWavesComponent/Wave1" instance=ExtResource( 8 )]
-pack_mob = ExtResource( 9 )
+[node name="EASY" type="Node2D" parent="Gate 1/WAVE 1"]
+script = ExtResource( 9 )
+
+[node name="SpawnerComponent" parent="Gate 1/WAVE 1/EASY" instance=ExtResource( 8 )]
 nbs_mobs = 3
+wait_to_start = 3
+rate_to_spawn = 1.5
 
-[node name="SpawnerComponent2" parent="SpawnerGate/AllWavesComponent/Wave1" instance=ExtResource( 8 )]
-pack_mob = ExtResource( 9 )
-nbs_mobs = 1
+[node name="NORMAL" type="Node2D" parent="Gate 1/WAVE 1"]
+script = ExtResource( 9 )
 
-[node name="Wave2" parent="SpawnerGate/AllWavesComponent" instance=ExtResource( 7 )]
-wait_time = Vector2( 0.5, 1 )
+[node name="SpawnerComponent" parent="Gate 1/WAVE 1/NORMAL" instance=ExtResource( 8 )]
+nbs_mobs = 5
+wait_to_start = 2
+rate_to_spawn = 1.0
 
-[node name="SpawnerComponent" parent="SpawnerGate/AllWavesComponent/Wave2" instance=ExtResource( 8 )]
-pack_mob = ExtResource( 9 )
-nbs_mobs = 2
+[node name="HARD" type="Node2D" parent="Gate 1/WAVE 1"]
+script = ExtResource( 9 )
+
+[node name="SpawnerComponent" parent="Gate 1/WAVE 1/HARD" instance=ExtResource( 8 )]
+nbs_mobs = 7
+wait_to_start = 1
+rate_to_spawn = 0.5
 
 [node name="TileMap2" type="TileMap" parent="."]
 z_index = 1
@@ -95,6 +105,12 @@ position = Vector2( 123, 158 )
 collision_layer = 769
 collision_mask = 0
 
-[editable path="SpawnerGate"]
-[editable path="SpawnerGate/AllWavesComponent/Wave1"]
-[editable path="SpawnerGate/AllWavesComponent/Wave2"]
+[node name="WAVESMANAGER" parent="." groups=["WavesManager"] instance=ExtResource( 11 )]
+
+[node name="WAIT" type="Node" parent="WAVESMANAGER"]
+script = ExtResource( 10 )
+
+[node name="WAVE 1" type="Node" parent="WAVESMANAGER"]
+script = ExtResource( 12 )
+
+[editable path="Gate 1"]

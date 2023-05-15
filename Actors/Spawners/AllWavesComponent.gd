@@ -1,43 +1,58 @@
 extends Node2D
-class_name AllWavesComponent
+class_name AllWaveComponent
 
-export(NodePath) var position2DPath
-onready var position2D = get_node(position2DPath)
-
-onready var wave_childs : Array = get_children()
-onready var wave_childs_count = get_child_count() -1
-
-var wave_spawned : bool = false setget set_wave_spawned
-var ready_to_spawn : bool = false setget set_ready_to_spawn
-
-var wave_index : int = 0
-
+var difficultyChoise : String
+var difficultySpawners : Array
+var spawnerSelect : Object
+var nbs_mobs_math : int = 0
+onready var waveManagerArray = get_tree().get_nodes_in_group("WavesManager")
+onready var waveManager = waveManagerArray[0]
 
 func _ready():
-	_prepare_wave()
+	difficultySpawners = get_children()
+	
+	var __ = waveManager.connect("startWave", self, "_on_startWave")
+	__ = waveManager.connect("howManyMobs", self, "_on_howManyMobs")
+	__ = waveManager.connect("difficulty_choice", self, "_on_difficulty_choice")	
+
+	
+#####  wait a signal #####
+# check the dificulte choice
 
 
-func set_ready_to_spawn(value):
-	if ready_to_spawn != value:
-		ready_to_spawn = value
+#### when signal received ####
+# start waves with dificulte choice
+
+func _input(event):
+	if Input.is_action_just_pressed("Test1"):
+		nbs_mobs_math = 0
+		for i in _on_howManyMobs():
+			nbs_mobs_math = nbs_mobs_math + i
+		print(nbs_mobs_math)
 		
-	if ready_to_spawn == true :
-		_spawn_wave()
 
-func set_wave_spawned(value) : 
-	if wave_spawned != value:
-		wave_spawned = value
-		
-	if wave_spawned == true and wave_index < wave_childs_count:
-		wave_index = wave_index +1
-		_prepare_wave()
-	else :
-		pass
+func _start_wave():
+	for difficultySpawner in difficultySpawners:
+		if difficultySpawner.name == difficultyChoise:
+			difficultySpawner._start_spawn_mobs()
+	
 
-func _prepare_wave():
-	wave_spawned = false
-	ready_to_spawn = false
-	wave_childs[wave_index]._start_add_pool_spawn()
+func _return_all_mobs_in_wave():
+	for difficultySpawner in difficultySpawners:
+		if difficultySpawner.name == difficultyChoise:
+			# retourn all mobs informations in array ?
+			pass
 
-func _spawn_wave():
-	wave_childs[wave_index]._start_wave_spawn()
+
+func _on_startWave(name,type):
+	if name == self.name:
+		difficultyChoise = type
+		_start_wave()
+	
+func _on_howManyMobs():
+	for difficultySpawner in difficultySpawners:
+		if difficultySpawner.name == difficultyChoise:
+			return difficultySpawner._how_many_mobs_next_waves()
+	
+func _on_difficulty_choice(value : String):
+	difficultyChoise = value

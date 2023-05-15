@@ -598,7 +598,14 @@ speed = 30
 one_shot = true
 
 [node name="Navigate2DComponent" parent="." instance=ExtResource( 9 )]
+visible = false
 ownerTargetPath = NodePath("..")
+
+[node name="Navigation2D" parent="Navigate2DComponent" index="0"]
+visible = false
+
+[node name="Line2D" parent="Navigate2DComponent" index="1"]
+visible = false
 
 [node name="STATEMACHINE" type="Node" parent="."]
 script = ExtResource( 2 )
