@@ -11,7 +11,7 @@ extends YSort
 ### BUILT IN ###
 
 func _ready() -> void :
-	var rectangle: Rect2 = $TileMap.get_used_rect()
+	var rectangle: Rect2 = $LevelNavTilmap.get_used_rect()
 	var cam = $Player/Camera2D
 	
 	if cam != null :

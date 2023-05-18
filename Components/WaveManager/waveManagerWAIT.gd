@@ -21,7 +21,7 @@ func enter_state() -> void:
 
 
 func update_state(_delta : float) -> void:
-	if Input.is_action_just_pressed("Attack1"):
+	if Input.is_action_just_pressed("Test1"):
 		WavesManager._next_wave_state()
 		pass
 	

@@ -44,6 +44,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Actors/Spawners/EnemieSpawnRessource.gd"
 }, {
+"base": "CanvasLayer",
+"class": "HUD",
+"language": "GDScript",
+"path": "res://Levels/HUD.gd"
+}, {
 "base": "Control",
 "class": "HealthBarComponent",
 "language": "GDScript",
@@ -97,12 +102,12 @@ _global_script_classes=[ {
 "base": "State",
 "class": "StateWaveWait",
 "language": "GDScript",
-"path": "res://Components/waveManagerWAIT.gd"
+"path": "res://Components/WaveManager/waveManagerWAIT.gd"
 }, {
 "base": "State",
 "class": "StateWaveWave",
 "language": "GDScript",
-"path": "res://Levels/StateWaveWAVE.gd"
+"path": "res://Components/WavesComponent/StateWaveWAVE.gd"
 }, {
 "base": "Node",
 "class": "Stats",
@@ -117,7 +122,7 @@ _global_script_classes=[ {
 "base": "StateMachine",
 "class": "WavesManager",
 "language": "GDScript",
-"path": "res://Components/WAVESMANAGER.gd"
+"path": "res://Components/WaveManager/WAVESMANAGER.gd"
 } ]
 _global_script_class_icons={
 "AllWaveComponent": "",
@@ -127,6 +132,7 @@ _global_script_class_icons={
 "Controler": "",
 "EasyEnemieControler": "",
 "EnemieSpawnRessource": "",
+"HUD": "",
 "HealthBarComponent": "",
 "HitBox": "",
 "HurtBox": "",

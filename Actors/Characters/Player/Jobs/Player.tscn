@@ -11,7 +11,7 @@
 [ext_resource path="res://Actors/StateMachines/StateMachine.gd" type="Script" id=9]
 [ext_resource path="res://Actors/StateMachines/State/State.gd" type="Script" id=10]
 [ext_resource path="res://Actors/Characters/Stats.tscn" type="PackedScene" id=11]
-[ext_resource path="res://Components/HealthBarComponent.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Components/ActorsComponent/HealthBarComponent.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Actors/Overlap/HurtBox.tscn" type="PackedScene" id=14]
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=18]
@@ -25,12 +25,10 @@ collision_layer = 256
 script = ExtResource( 1 )
 
 [node name="Stats" parent="." instance=ExtResource( 11 )]
+actor_type = 1
 max_health = 1000
 damage = 1
 speed = 50
-
-[node name="Camera2D" type="Camera2D" parent="."]
-current = true
 
 [node name="Controler" type="Node" parent="."]
 script = ExtResource( 2 )
@@ -94,6 +92,9 @@ margin_bottom = 40.0
 
 [node name="HealthBarComponent" parent="HUD" instance=ExtResource( 12 )]
 statsPath = NodePath("../../Stats")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
 
 [editable path="HitboxsPivot/AttacktHitBox"]
 [editable path="HurtBox"]
