@@ -153,12 +153,6 @@ tile_data = PoolIntArray( 131083, 0, 655362, 131084, 0, 655362, 131085, 0, 65536
 
 [node name="LevelNavTilmap" parent="." instance=ExtResource( 3 )]
 
-[node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 48, 101 )
-
-[node name="AnimationTree" parent="Player" index="4"]
-parameters/playback = SubResource( 1 )
-
 [node name="Cristal" parent="." groups=["cristal"] instance=ExtResource( 6 )]
 position = Vector2( 123, 158 )
 collision_layer = 769
@@ -215,9 +209,15 @@ script = ExtResource( 12 )
 [node name="WAIT 3" type="Node" parent="WAVESMANAGER"]
 script = ExtResource( 10 )
 
+[node name="Player" parent="." instance=ExtResource( 1 )]
+position = Vector2( 259, 90 )
+
+[node name="AnimationTree" parent="Player" index="3"]
+parameters/playback = SubResource( 1 )
+
 [editable path="Gate 1"]
 [editable path="Gate 2"]
 [editable path="LevelNavTilmap"]
 [editable path="Player"]
-[editable path="Player/HitboxsPivot/AttacktHitBox"]
 [editable path="Player/HurtBox"]
+[editable path="Player/Pivot/PivotWeapon/AttacktHitBox"]

@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_animation_importer"
+type="SpriteFrames"
+valid=false
+
+[deps]
+
+source_file="res://Asset/Colors_palette/t1.aseprite"
+[params]
+
+extrude=false
+default_direction="Forward"
+default_loop=false

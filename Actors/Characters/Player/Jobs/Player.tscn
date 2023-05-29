@@ -1,18 +1,226 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://Actors/Characters/Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://Actors/Characters/Player/PlayerControler.gd" type="Script" id=2]
-[ext_resource path="res://Asset/Actors/Crokie-Sheet.png" type="Texture" id=3]
+[ext_resource path="res://Asset/Actors/Knigth.png" type="Texture" id=3]
 [ext_resource path="res://Actors/Characters/Player/Ressources/PlayerColiderBox.tres" type="Shape2D" id=4]
 [ext_resource path="res://Actors/Characters/Player/Ressources/PlayerAttackHitBox.tres" type="Shape2D" id=5]
-[ext_resource path="res://Actors/ActorAnimationTree.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Actors/ActorAnimationPlayer.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Actors/Overlap/HitBox.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Actors/StateMachines/StateMachine.gd" type="Script" id=9]
 [ext_resource path="res://Actors/StateMachines/State/State.gd" type="Script" id=10]
 [ext_resource path="res://Actors/Characters/Stats.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Components/ActorsComponent/HealthBarComponent.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Asset/Weapons/Sword.png" type="Texture" id=13]
 [ext_resource path="res://Actors/Overlap/HurtBox.tscn" type="PackedScene" id=14]
+
+[sub_resource type="Animation" id=22]
+resource_name = "Attack"
+length = 0.6
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.6 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "_attack_animation_finished"
+} ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Pivot/PivotWeapon/AttacktHitBox/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.15, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Pivot/PivotWeapon/AttacktHitBox:rotation_degrees")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.1, 0.2, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 170.0, 0.0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Pivot/Sprite:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 4, 5, 4 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Pivot/PivotWeapon/AttacktHitBox/Sprite:rotation_degrees")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ -15.0, 40.0, -15.0 ]
+}
+
+[sub_resource type="Animation" id=26]
+resource_name = "Die"
+length = 0.6
+step = 0.15
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.6 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "DIE_animation_finished"
+} ]
+}
+
+[sub_resource type="Animation" id=30]
+resource_name = "Idle"
+length = 0.5
+loop = true
+step = 0.25
+tracks/0/type = "value"
+tracks/0/path = NodePath("Pivot/Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.25 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 4, 5 ]
+}
+
+[sub_resource type="Animation" id=34]
+resource_name = "Move"
+length = 0.6
+loop = true
+step = 0.15
+tracks/0/type = "value"
+tracks/0/path = NodePath("Pivot/Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.15, 0.3, 0.45 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3 ]
+}
+
+[sub_resource type="Animation" id=44]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Pivot/PivotWeapon/AttacktHitBox:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 90.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Pivot/PivotWeapon/AttacktHitBox/Sprite:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ -36.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Pivot/PivotWeapon/AttacktHitBox:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Pivot/Sprite:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 1 ]
+}
+
+[sub_resource type="AnimationNodeAnimation" id=35]
+animation = "Attack"
+
+[sub_resource type="AnimationNodeAnimation" id=36]
+animation = "Die"
+
+[sub_resource type="AnimationNodeAnimation" id=37]
+animation = "Idle"
+
+[sub_resource type="AnimationNodeAnimation" id=38]
+animation = "Move"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=39]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=40]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=41]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=42]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=43]
+
+[sub_resource type="AnimationNodeStateMachine" id=28]
+states/ATTACK/node = SubResource( 35 )
+states/ATTACK/position = Vector2( -132.506, 132.8 )
+states/DIE/node = SubResource( 36 )
+states/DIE/position = Vector2( 294.494, 132.8 )
+states/IDLE/node = SubResource( 37 )
+states/IDLE/position = Vector2( 72.494, 132.8 )
+states/MOVE/node = SubResource( 38 )
+states/MOVE/position = Vector2( 72.494, 47.8 )
+transitions = [ "IDLE", "ATTACK", SubResource( 39 ), "ATTACK", "IDLE", SubResource( 40 ), "MOVE", "IDLE", SubResource( 41 ), "IDLE", "MOVE", SubResource( 42 ), "IDLE", "DIE", SubResource( 43 ) ]
+start_node = "IDLE"
+end_node = "DIE"
+graph_offset = Vector2( -672.506, 16.8 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=18]
 
@@ -33,16 +241,16 @@ speed = 50
 [node name="Controler" type="Node" parent="."]
 script = ExtResource( 2 )
 
-[node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 0, -1 )
-texture = ExtResource( 3 )
-hframes = 9
-vframes = 4
-frame = 10
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Attack = SubResource( 22 )
+anims/Die = SubResource( 26 )
+anims/Idle = SubResource( 30 )
+anims/Move = SubResource( 34 )
+anims/RESET = SubResource( 44 )
 
-[node name="AnimationPlayer" parent="." instance=ExtResource( 7 )]
-
-[node name="AnimationTree" parent="." instance=ExtResource( 6 )]
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource( 28 )
+anim_player = NodePath("../AnimationPlayer")
 active = true
 parameters/playback = SubResource( 18 )
 
@@ -51,15 +259,6 @@ visible = false
 position = Vector2( 0, 3 )
 shape = ExtResource( 4 )
 
-[node name="HitboxsPivot" type="Position2D" parent="."]
-
-[node name="AttacktHitBox" parent="HitboxsPivot" instance=ExtResource( 8 )]
-collision_mask = 32
-damage = 1
-
-[node name="CollisionShape2D" parent="HitboxsPivot/AttacktHitBox" index="0"]
-shape = ExtResource( 5 )
-
 [node name="HurtBox" parent="." instance=ExtResource( 14 )]
 collision_layer = 512
 statsPath = NodePath("../Stats")
@@ -67,6 +266,32 @@ statsPath = NodePath("../Stats")
 [node name="CollisionShape2D" parent="HurtBox" index="0"]
 position = Vector2( 0, 0 )
 shape = SubResource( 19 )
+
+[node name="Pivot" type="Position2D" parent="."]
+
+[node name="Sprite" type="Sprite" parent="Pivot"]
+z_index = 5
+texture = ExtResource( 3 )
+hframes = 4
+vframes = 2
+frame = 1
+
+[node name="PivotWeapon" type="Position2D" parent="Pivot"]
+
+[node name="AttacktHitBox" parent="Pivot/PivotWeapon" instance=ExtResource( 8 )]
+rotation = 1.5708
+collision_mask = 32
+damage = 1
+
+[node name="CollisionShape2D" parent="Pivot/PivotWeapon/AttacktHitBox" index="0"]
+position = Vector2( 4, -11 )
+shape = ExtResource( 5 )
+
+[node name="Sprite" type="Sprite" parent="Pivot/PivotWeapon/AttacktHitBox"]
+position = Vector2( 5, -10 )
+rotation = -0.628319
+texture = ExtResource( 13 )
+flip_v = true
 
 [node name="STATEMACHINE" type="Node" parent="."]
 script = ExtResource( 9 )
@@ -96,5 +321,5 @@ statsPath = NodePath("../../Stats")
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
 
-[editable path="HitboxsPivot/AttacktHitBox"]
 [editable path="HurtBox"]
+[editable path="Pivot/PivotWeapon/AttacktHitBox"]
