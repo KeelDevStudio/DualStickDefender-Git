@@ -22,7 +22,7 @@ onready var waveManager = waveManagerArray[0]
 
 
 signal current_health_0
-signal im_dead
+#signal im_dead
 
 
 ### GLOBAL VARIABLE ###

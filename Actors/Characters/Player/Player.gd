@@ -14,6 +14,7 @@ class_name Player
 const FRICTION = 500
 const ACCELERATION = 250
 
+onready var abilitys = $AbilitysComponent
 onready var damage = $Stats.damage
 onready var MAX_SPEED = $Stats.speed
 onready var animation_player = $AnimationPlayer
@@ -26,7 +27,7 @@ onready var stats = $Stats
 
 var velocity = Vector2.ZERO
 var dir_move = Vector2.ZERO
-
+var building := false
 
 ### BUIL IN ###
 
@@ -50,7 +51,13 @@ func _physics_process(_delta):
 		$Pivot.scale.x = +1
 	elif (mouse_position.x - self.position.x) < 1: 
 		$Pivot.scale.x = -1
-
+	
+	if controler.defense1:
+		building = true
+		var instance = abilitys.Defense1Packscene.instance()
+		instance.position = get_global_mouse_position()
+		get_tree().current_scene.add_child(instance)
+	if controler.defense2: building = false	
 
 ### LOGIC ###
 
@@ -73,7 +80,11 @@ func MOVE_update_state(_delta):
 		velocity = velocity.move_toward(dir_move * MAX_SPEED, ACCELERATION * _delta)
 	else : state_machine.set_state("IDLE")
 
-	if controler.attack1 : state_machine.set_state("ATTACK")
+	if controler.attack1 and building == false: 
+		state_machine.set_state("ATTACK")
+	
+		
+
 
 	velocity = move_and_slide(velocity)
 
@@ -83,13 +94,22 @@ func IDLE_update_state(_delta):
 	if dir_move != Vector2.ZERO:
 		state_machine.set_state("MOVE")
 	
-	if controler.attack1 : state_machine.set_state("ATTACK")
+	if controler.attack1 and building == false: 
+		state_machine.set_state("ATTACK")
 
+func BUILD_enter_state():
+	self.visible = false
+	set_physics_process(false)
+
+func BUILD_exit_state():
+	self.visible = true
+	set_physics_process(true)
 
 ### SIGNAL RESPONSISES ###
 
 func _attack_animation_finished():
-	state_machine.set_state("MOVE")
+	if state_machine.get_state_name() != "BUILD":
+		state_machine.set_state("MOVE")
 
 func DIE_animation_finished():
 	queue_free()

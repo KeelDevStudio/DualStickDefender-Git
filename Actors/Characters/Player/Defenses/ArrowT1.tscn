@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Actors/Characters/Player/Defenses/Baliste.gd" type="Script" id=1]
 [ext_resource path="res://Actors/StateMachines/State/State.gd" type="Script" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://Actors/Characters/Player/Defenses/MuzzleTank.gd" type="Script" id=6]
 [ext_resource path="res://Actors/Characters/Player/Weapons/Arrow.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Actors/Characters/Stats.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Actors/Characters/Player/Defenses/DrawRange.gd" type="Script" id=9]
 
 [sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 3 )
@@ -31,39 +32,47 @@ animations = [ {
 } ]
 
 [sub_resource type="CircleShape2D" id=5]
-radius = 100.0
+radius = 30.0
 
 [sub_resource type="RectangleShape2D" id=6]
 extents = Vector2( 5, 7 )
 
 [node name="Baliste" type="KinematicBody2D"]
 collision_layer = 256
-collision_mask = 16
+collision_mask = 0
 script = ExtResource( 1 )
+chase_range = 90
 
 [node name="Base" type="Sprite" parent="."]
 texture = ExtResource( 3 )
+offset = Vector2( 8, 9 )
 vframes = 4
 
 [node name="Turet" type="AnimatedSprite" parent="."]
-position = Vector2( 0, -1 )
-rotation = -4.46638e-06
+position = Vector2( 9, 7 )
 frames = SubResource( 4 )
 animation = "READY"
-offset = Vector2( 2.5, -0.5 )
 
 [node name="Muzzle" type="Node2D" parent="Turet"]
-position = Vector2( 25, 0.000111639 )
-rotation = 4.46638e-06
+position = Vector2( 10, 0 )
 script = ExtResource( 6 )
 damage = 1
 projectile = ExtResource( 7 )
 collision_mask = 5
 
 [node name="ChaseArea" parent="." instance=ExtResource( 5 )]
-collision_mask = 32
+process_priority = 1
+position = Vector2( 8, 9 )
+z_index = 5
+collision_mask = 16
+monitorable = false
+ownerNodePath = NodePath("..")
 
-[node name="CollisionShape2D" parent="ChaseArea" index="0"]
+[node name="Node2D" type="Node2D" parent="ChaseArea"]
+script = ExtResource( 9 )
+
+[node name="CollisionShape2D" parent="ChaseArea" index="1"]
+modulate = Color( 0.709804, 0.686275, 0.686275, 0.392157 )
 shape = SubResource( 5 )
 
 [node name="Stats" parent="." instance=ExtResource( 8 )]
@@ -91,7 +100,7 @@ script = ExtResource( 2 )
 script = ExtResource( 2 )
 
 [node name="SelfBoxCollider" type="CollisionShape2D" parent="."]
-position = Vector2( 0, 1 )
+position = Vector2( 8, 9 )
 shape = SubResource( 6 )
 
 [editable path="ChaseArea"]

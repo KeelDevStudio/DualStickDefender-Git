@@ -10,7 +10,10 @@ func _ready() -> void:
 	pass
 	
 func _on_body_entered(_body):
-	ownerNode.target = _body
+	if ownerNode != null:
+		ownerNode.target = _body
 	
 func _on_body_exited(_body):
-	ownerNode.target = null
+	if ownerNode != null :
+		ownerNode.target = null
+

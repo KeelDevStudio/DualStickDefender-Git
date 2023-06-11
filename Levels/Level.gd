@@ -6,14 +6,16 @@
 ### EXPENSION ####
 
 extends YSort
+class_name Level
 
+
+export(NodePath) var tilemapLimitPath
+onready var tileMapLimit = get_node(tilemapLimitPath)
+onready var rectangle: Rect2 = tileMapLimit.get_used_rect()
 
 ### BUILT IN ###
 
-func _ready() -> void :
-	var rectangle: Rect2 = $LevelNavTilmap.get_used_rect()
-	var cam = $Player/Camera2D
-	
+func _set_cam_limit(cam):
 	if cam != null :
 		cam.limit_left = rectangle.position.x * $TileMap.cell_size.x
 		cam.limit_top = rectangle.position.y * $TileMap.cell_size.y

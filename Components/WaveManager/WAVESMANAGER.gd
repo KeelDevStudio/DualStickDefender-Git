@@ -21,6 +21,15 @@ var wave : Object
 export(NodePath) var HUDPath
 onready var HUD = get_node(HUDPath)
 
+export(NodePath) var playerPath
+onready var player = get_node(playerPath)
+
+export(NodePath) var buildingCamPath
+onready var buildingCam = get_node(buildingCamPath)
+
+export(NodePath) var HUDBtn_BuildBar_Path
+onready var HUDBtn_BuildBar = get_node(HUDBtn_BuildBar_Path)
+
 signal startWave
 signal howManyMobs
 signal difficulty_choice
@@ -46,8 +55,9 @@ func _next_wave_state():
 
 
 
-func _emit_signal_start_wave(wave_name : String):
-	emit_signal("startWave", wave_name, difficult_wave_name)
+func _emit_signal_start_wave(_wave_name : String):
+	emit_signal("startWave", _wave_name, difficult_wave_name)
+	
 	pass
 
 func _emit_signal_how_many_mobs():
@@ -72,3 +82,21 @@ func _update_WAVE():
 	wave_name = waveManager_machine.get_state_name()
 	wave = waveManager_machine.get_state()
 	nbs_mobs_wave_kill = 0
+	_switch_player_or_build_mode()
+
+func _switch_player_or_build_mode():
+	if wave is StateWaveWait:
+		print("wait")
+		buildingCam.current = true
+		player.state_machine.set_state("BUILD")
+		for i in HUDBtn_BuildBar.get_children():
+			i.disabled = false
+			i.visible = true
+	
+	if wave is StateWaveWave:
+		print("wave")
+		player.get_node("Camera2D").current = true
+		player.state_machine.set_state("IDLE")
+		for i in HUDBtn_BuildBar.get_children():
+			i.disabled = true
+			i.visible = false

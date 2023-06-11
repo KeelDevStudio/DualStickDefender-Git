@@ -1,5 +1,5 @@
 extends CanvasLayer
-class_name HUD
+class_name HUDWave
 
 var max_nbs_mobs : int
 var kill_nbs_mobs : int
@@ -10,10 +10,11 @@ onready var progress = $ProgressBar
 onready var progressLabel = $ProgressBar/LabeProgress
 
 
-func _process(delta):
+func _process(_delta):
 	if current_wave != null:
 		if current_wave is StateWaveWait:
 			label.set_text("WAIT")
+			
 		
 		if current_wave is StateWaveWave:
 			label.set_text(current_wave.name)
@@ -24,3 +25,4 @@ func _process(delta):
 			
 		else :
 			progress.visible = false
+

@@ -18,7 +18,8 @@ onready var stats = get_node(statsPath)
 ### LOGIC ###
 
 func hurtbox_hurt(damage):
-	stats.current_health = max(0, stats.current_health - damage)
+	if stats.current_health != 0 :
+		stats.current_health = max(0, stats.current_health - damage)
 
 
 	

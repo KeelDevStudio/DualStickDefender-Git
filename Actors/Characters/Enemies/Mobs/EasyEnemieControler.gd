@@ -79,5 +79,7 @@ func DIE_animation_finished():
 
 
 func _on_current_health_0():
+	$HurtBox/CollisionShape2D.queue_free()
 	state_machine.set_state("DIE")
+	
 

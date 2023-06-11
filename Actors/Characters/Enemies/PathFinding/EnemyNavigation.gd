@@ -40,11 +40,12 @@ func _navigate():
 
 	
 #	if global_position == path[0]:
+#		return Vector2.ZERO
 #		path.pop_front()
 	
 	else : return Vector2.ZERO
 
 func _generate_path():
 	if levelNavigation != null and ownerTarget.target != null:
-		path = levelNavigation.get_simple_path(global_position, ownerTarget.target.global_position, false)
+		path = levelNavigation.get_simple_path(global_position, ownerTarget.target.global_position, true)
 		line2D.points = path
