@@ -57,6 +57,7 @@ func _next_wave_state():
 
 func _emit_signal_start_wave(_wave_name : String):
 	emit_signal("startWave", _wave_name, difficult_wave_name)
+
 	
 	pass
 
@@ -83,10 +84,10 @@ func _update_WAVE():
 	wave = waveManager_machine.get_state()
 	nbs_mobs_wave_kill = 0
 	_switch_player_or_build_mode()
+	get_tree().call_group("Defense", "_switch_build_mode", wave )
 
 func _switch_player_or_build_mode():
 	if wave is StateWaveWait:
-		print("wait")
 		buildingCam.current = true
 		player.state_machine.set_state("BUILD")
 		for i in HUDBtn_BuildBar.get_children():
@@ -94,7 +95,7 @@ func _switch_player_or_build_mode():
 			i.visible = true
 	
 	if wave is StateWaveWave:
-		print("wave")
+
 		player.get_node("Camera2D").current = true
 		player.state_machine.set_state("IDLE")
 		for i in HUDBtn_BuildBar.get_children():

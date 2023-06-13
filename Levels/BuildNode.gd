@@ -1,4 +1,5 @@
 extends Control
+class_name TowerBuildComponent
 
 export(NodePath) var map_node_path
 onready var map_node = get_node(map_node_path)
@@ -6,7 +7,8 @@ onready var map_node = get_node(map_node_path)
 export(NodePath) var HUD_btn_path
 onready var HUD_btn = get_node(HUD_btn_path)
 
-onready var Tower_Exclusion_Tilemap = $TowersBuild
+export(NodePath) var TowerExclusionTilemapPath
+onready var Tower_Exclusion_Tilemap = get_node(TowerExclusionTilemapPath)
 
 var build_mode = false
 var build_valid = false
@@ -81,9 +83,10 @@ func verify_and_build():
 		## verify cash + units defenses
 		var new_tower = load("res://Actors/Characters/Player/Defenses/" + build_type + ".tscn").instance()
 		new_tower.position = build_location
-		new_tower.build_mode = false
+		new_tower.first_build_mode = false
 		get_tree().current_scene.add_child(new_tower, true)
 		Tower_Exclusion_Tilemap.set_cellv(build_tile, 5)
 		cancel_build_mode()
 	
+
 

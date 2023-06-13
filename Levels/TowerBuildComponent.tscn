@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Levels/BuildNode.gd" type="Script" id=1]
+
+[node name="BuildComponent" type="Control"]
+script = ExtResource( 1 )
+map_node_path = NodePath("../LevelTilemap")
+HUD_btn_path = NodePath("../UI/HUDBtn")

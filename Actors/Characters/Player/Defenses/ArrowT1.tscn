@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Actors/Characters/Player/Defenses/Baliste.gd" type="Script" id=1]
 [ext_resource path="res://Actors/StateMachines/State/State.gd" type="Script" id=2]
@@ -9,25 +9,27 @@
 [ext_resource path="res://Actors/Characters/Player/Weapons/Arrow.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Actors/Characters/Stats.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Actors/Characters/Player/Defenses/DrawRange.gd" type="Script" id=9]
-
-[sub_resource type="AtlasTexture" id=2]
-atlas = ExtResource( 3 )
-region = Rect2( 0, 16, 16, 16 )
+[ext_resource path="res://Actors/Characters/Player/Defenses/SlectionArea2D.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Asset/Turrets/Sprite-004..png" type="Texture" id=11]
 
 [sub_resource type="AtlasTexture" id=3]
 atlas = ExtResource( 3 )
 region = Rect2( 0, 32, 16, 16 )
 
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 16, 16, 16 )
+
 [sub_resource type="SpriteFrames" id=4]
 animations = [ {
-"frames": [ SubResource( 2 ) ],
-"loop": false,
-"name": "RELOAD",
-"speed": 5.0
-}, {
 "frames": [ SubResource( 3 ) ],
 "loop": false,
 "name": "READY",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 2 ) ],
+"loop": false,
+"name": "RELOAD",
 "speed": 5.0
 } ]
 
@@ -37,7 +39,7 @@ radius = 30.0
 [sub_resource type="RectangleShape2D" id=6]
 extents = Vector2( 5, 7 )
 
-[node name="Baliste" type="KinematicBody2D"]
+[node name="Baliste" type="KinematicBody2D" groups=["Defense"]]
 collision_layer = 256
 collision_mask = 0
 script = ExtResource( 1 )
@@ -68,12 +70,12 @@ collision_mask = 16
 monitorable = false
 ownerNodePath = NodePath("..")
 
-[node name="Node2D" type="Node2D" parent="ChaseArea"]
-script = ExtResource( 9 )
-
-[node name="CollisionShape2D" parent="ChaseArea" index="1"]
+[node name="CollisionShape2D" parent="ChaseArea" index="0"]
 modulate = Color( 0.709804, 0.686275, 0.686275, 0.392157 )
 shape = SubResource( 5 )
+
+[node name="Node2D" type="Node2D" parent="ChaseArea"]
+script = ExtResource( 9 )
 
 [node name="Stats" parent="." instance=ExtResource( 8 )]
 max_health = 3
@@ -90,6 +92,9 @@ one_shot = true
 [node name="STATEMACHINE" type="Node" parent="."]
 script = ExtResource( 4 )
 
+[node name="BUILD" type="Node" parent="STATEMACHINE"]
+script = ExtResource( 2 )
+
 [node name="RELOAD" type="Node" parent="STATEMACHINE"]
 script = ExtResource( 2 )
 
@@ -100,7 +105,22 @@ script = ExtResource( 2 )
 script = ExtResource( 2 )
 
 [node name="SelfBoxCollider" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2( 8, 9 )
 shape = SubResource( 6 )
+
+[node name="SlectionArea2D" parent="." instance=ExtResource( 10 )]
+
+[node name="Button" type="TextureButton" parent="."]
+visible = false
+margin_top = -6.0
+margin_right = 32.0
+margin_bottom = 26.0
+rect_scale = Vector2( 0.2, 0.2 )
+disabled = true
+texture_normal = ExtResource( 11 )
+
+[connection signal="selection_toggle" from="SlectionArea2D" to="." method="_on_SlectionArea2D_selection_toggle"]
+[connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
 
 [editable path="ChaseArea"]

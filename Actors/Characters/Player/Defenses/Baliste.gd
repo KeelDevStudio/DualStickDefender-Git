@@ -18,7 +18,7 @@ onready var muzzle = $Turet/Muzzle
 onready var stats = $Stats
 
 
-var build_mode = true
+var first_build_mode = true
 var current_enemie : Node2D
 var enemies := []
 var target : Node2D
@@ -37,9 +37,10 @@ func _initialize():
 	
 func _ready():
 	_initialize()
-	if build_mode == false:
+	if first_build_mode == false:
 		var __ = chase_area.connect("body_entered", self, "_on_body_area_entered")
 		__ = chase_area.connect("body_exited", self, "_on_body_area_exited")
+		
 		state_machine.set_to_default_state()
 		$ChaseArea/Node2D.visible = false
 		self.position.y = self.position.y -2
@@ -62,7 +63,7 @@ func _physics_process(_delta):
 		
 
 func _input(_event):
-	if build_mode == false:
+	if first_build_mode == false:
 		if Input.is_action_pressed("Defense 2"): 
 			$ChaseArea/Node2D.visible = true
 		elif Input.is_action_just_released("Defense 2") : $ChaseArea/Node2D.visible = false
@@ -77,6 +78,7 @@ func _input(_event):
 #		global_position = get_global_mouse_position()
 #		if Input.is_action_just_pressed("Defense 2"): 
 #			state_machine.set_to_default_state()
+#			building = false
 #			building = false
 #			$ChaseArea/CollisionShape2D.disabled = false
 
@@ -105,7 +107,8 @@ func RELOAD_enter_state():
 	$Cooldown.start(cooldown)
 func RELOAD_update_state(_delta):
 	yield($Cooldown,"timeout")
-	state_machine.set_state("READY")
+	if state_machine.get_state_name() == "RELOAD":
+		state_machine.set_state("READY")
 
 
 func READY_enter_state():
@@ -130,3 +133,32 @@ func _on_body_area_exited(_area):
 			enemies.erase(_area)
 
 
+
+
+func _on_Button_pressed():
+	if state_machine.get_state_name() == "BUILD":
+		queue_free()
+
+
+
+func _on_SlectionArea2D_selection_toggle(_selection):
+	if state_machine.get_state_name() == "BUILD":
+		if _selection:
+			$Button.disabled = false
+			$Button.visible = true
+		else:
+			$Button.disabled = true
+			$Button.visible = false
+	
+func _switch_build_mode(_wave_type):
+	if _wave_type is StateWaveWait:
+		state_machine.set_state("BUILD")
+		
+		
+	if _wave_type is StateWaveWave:
+		state_machine.set_state("RELOAD")
+		$Button.disabled = true
+		$Button.visible = false
+		$SlectionArea2D.set_selected(!$SlectionArea2D.selected)
+	
+	

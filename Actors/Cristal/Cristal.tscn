@@ -5,7 +5,7 @@
 [sub_resource type="CircleShape2D" id=1]
 radius = 6.0
 
-[node name="Cristal" type="KinematicBody2D"]
+[node name="Cristal" type="StaticBody2D"]
 collision_mask = 2048
 
 [node name="Sprite" type="Sprite" parent="."]

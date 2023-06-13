@@ -3,6 +3,11 @@ class_name HUDBtn
 
 var tower_range = 64
 
+func _ready():
+	$BuildBar/Arrow2.disabled = true
+	$BuildBar/Arrow3.disabled = true
+	$BuildBar/Arrow4.disabled = true
+
 func set_tower_preview(tower_type, mouse_position):
 	var drag_tower = load("res://Actors/Characters/Player/Defenses/" + tower_type + ".tscn").instance()
 	drag_tower.set_name("DragTower")
